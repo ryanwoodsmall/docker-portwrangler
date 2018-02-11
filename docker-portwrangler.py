@@ -119,4 +119,4 @@ def docker_portwrangler():
 
 @app.route('/json')
 def docker_portwrangler_json():
-    return json.dumps([get_docker_port_info()])
+    return json.dumps(get_docker_port_info())
