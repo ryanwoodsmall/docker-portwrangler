@@ -109,5 +109,5 @@ def docker_portwrangler():
         page += tfooter
         page += dclient.info()['SystemTime']
         page += hfooter
-    page = BeautifulSoup(page, 'html.parser')
+        page = BeautifulSoup(page, 'html.parser')
     return page.prettify()
