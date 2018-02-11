@@ -68,7 +68,11 @@ def get_docker_container_ids():
 def get_docker_container_info(cid):
     c = dclient.containers.get(cid)
     cname = re.sub('^/', '', c.attrs['Name'])
-    cinfo = { 'Id': cid, 'Name': cname, 'Ports': c.attrs['NetworkSettings']['Ports'] }
+    if 'ExposedPorts' in c.attrs['Config'].keys():
+        ep = c.attrs['Config']['ExposedPorts']
+    else:
+        ep = {}
+    cinfo = { 'Id': cid, 'Name': cname, 'ExposedPorts': ep, 'Ports': c.attrs['NetworkSettings']['Ports'] }
     return cinfo
 
 def get_docker_port_info():
