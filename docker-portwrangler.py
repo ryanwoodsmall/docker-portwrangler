@@ -2,6 +2,7 @@
 # ahh,
 #
 
+from bs4 import BeautifulSoup
 import docker
 from flask import Flask
 from flask import request
@@ -108,4 +109,5 @@ def docker_portwrangler():
         page += tfooter
         page += dclient.info()['SystemTime']
         page += hfooter
-    return page
+    page = BeautifulSoup(page, 'html.parser')
+    return page.prettify()
