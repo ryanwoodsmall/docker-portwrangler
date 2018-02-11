@@ -26,6 +26,8 @@ hheader = """
 """
 
 hfooter = """
+  <br>
+  <a href="/json">json</a>
   </body>
 </html>
 """
@@ -69,16 +71,19 @@ def get_docker_container_info(cid):
     cinfo = { 'Id': cid, 'Name': cname, 'Ports': c.attrs['NetworkSettings']['Ports'] }
     return cinfo
 
+def get_docker_port_info():
+    cps = []
+    cids = get_docker_container_ids()
+    for cid in cids:
+        cps.append(get_docker_container_info(cid))
+    return cps
+
 @app.route('/')
 def docker_portwrangler():
     page = ''
-    cids = get_docker_container_ids()
-    cps = []
-    for cid in cids:
-        cps.append(get_docker_container_info(cid))
-    cpj = json.dumps([cps])
+    cps = get_docker_port_info()
     if request.args.get('format') == 'json':
-        page += cpj
+        page = docker_portwrangler_json()
     else:
         page += hheader
         page += h1o + dclient.info()['Name'] + h1c
@@ -111,3 +116,7 @@ def docker_portwrangler():
         page += hfooter
         page = BeautifulSoup(page, 'html.parser').prettify()
     return page
+
+@app.route('/json')
+def docker_portwrangler_json():
+    return json.dumps([get_docker_port_info()])
