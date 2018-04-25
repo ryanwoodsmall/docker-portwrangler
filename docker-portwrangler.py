@@ -106,11 +106,11 @@ def docker_portwrangler():
             for i in range(0, 5, 1):
                 emptytd += tdo + '&nbsp;' + tdc
             if not bool(dclient.containers.get(cp['Id']).attrs['NetworkSettings']['Ports']):
-                page += tro + commontd + emptytd + trc
+                page += tro + commontd + emptytd + emptytd + trc
                 continue
             for pn in cp['Ports'].keys():
                 if cp['Ports'][pn] == None:
-                    page += tro + commontd + emptytd + trc
+                    page += tro + commontd + emptytd + emptytd + trc
                     continue
                 page += tro
                 page += commontd
