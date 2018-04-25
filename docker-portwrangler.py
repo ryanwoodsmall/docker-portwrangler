@@ -43,6 +43,7 @@ theader = """
     <th>ExposedPort</th>
     <th>HostIp</th>
     <th>HostPort</th>
+    <th>Link</th>
   </tr>
 """
 
@@ -51,6 +52,9 @@ tfooter = """
 <br>
 """
 
+ahlo = '<a href="'
+ahlc = '">'
+ahtc = '</a>'
 h1o = '<h1>'
 h1c = '</h1>'
 tro = '<tr>'
@@ -59,6 +63,7 @@ tdo = '<td>'
 tdc = '</td>'
 
 dclient = docker.from_env()
+dockerhost= dclient.info()['Name']
 
 def get_docker_container_ids():
     cids = []
@@ -91,7 +96,7 @@ def docker_portwrangler():
         page = docker_portwrangler_json()
     else:
         page += hheader
-        page += h1o + dclient.info()['Name'] + h1c
+        page += h1o + dockerhost + h1c
         page += theader
         for cp in cps:
             commontd = ''
@@ -115,6 +120,15 @@ def docker_portwrangler():
                     page += tdo + prot + tdc + tdo + ep + tdc
                     for k in 'HostIp','HostPort':
                         page += tdo + p[k] + tdc
+                    plink = ''
+                    if prot == 'tcp':
+                        if p['HostIp'] == '0.0.0.0':
+                            pd = dockerhost
+                        else:
+                            pd = p['HostIp']
+                        pd += ':' + p['HostPort']
+                        plink = ahlo + '//' + pd + ahlc + pd + ahtc
+                    page += tdo + plink + tdc
                 page += trc
         page += tfooter
         page += dclient.info()['SystemTime']
