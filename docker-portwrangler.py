@@ -29,7 +29,9 @@ hheader = """
 
 hfooter = """
   <br>
-  <a href="/json">json</a> . <a href="/xml">xml</a>
+  <a href="/json">json</a>
+  <br>
+  <a href="/xml">xml</a>
   </body>
 </html>
 """
