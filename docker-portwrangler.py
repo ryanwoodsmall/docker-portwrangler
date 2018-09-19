@@ -3,6 +3,7 @@
 #
 
 from bs4 import BeautifulSoup
+import dicttoxml
 import docker
 from flask import Flask
 from flask import request
@@ -28,7 +29,7 @@ hheader = """
 
 hfooter = """
   <br>
-  <a href="/json">json</a>
+  <a href="/json">json</a> . <a href="/xml">xml</a>
   </body>
 </html>
 """
@@ -139,3 +140,7 @@ def docker_portwrangler():
 @app.route('/json')
 def docker_portwrangler_json():
     return json.dumps(get_docker_port_info())
+
+@app.route('/xml')
+def docker_portwrangler_xml():
+    return dicttoxml.dicttoxml(get_docker_port_info())
