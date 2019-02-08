@@ -97,6 +97,8 @@ def docker_portwrangler():
     cps = get_docker_port_info()
     if request.args.get('format') == 'json':
         page = docker_portwrangler_json()
+    elif request.args.get('format') == 'xml':
+        page = docker_portwrangler_xml()
     else:
         page += hheader
         page += h1o + dockerhost + h1c
