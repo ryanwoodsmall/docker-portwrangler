@@ -66,7 +66,7 @@ tdo = '<td>'
 tdc = '</td>'
 
 dclient = docker.from_env()
-dockerhost= dclient.info()['Name']
+dockerhost = dclient.info()['Name']
 
 def get_docker_container_ids():
     cids = []
